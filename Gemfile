@@ -59,3 +59,6 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+gem "good_job", "~> 4.2"
+gem "foreman", "~> 0.88.1"
