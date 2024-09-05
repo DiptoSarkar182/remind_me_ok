@@ -64,3 +64,5 @@ gem "good_job", "~> 4.2"
 gem "foreman", "~> 0.88.1"
 
 gem "cancancan", "~> 3.6"
+
+gem "pghero", "~> 3.6"

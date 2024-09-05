@@ -17,6 +17,13 @@ Rails.application.routes.draw do
     mount GoodJob::Engine => 'good_job'
   end
 
+  # Postgres dashboard path
+  if Rails.env.production? || Rails.env.development?
+    authenticate :user, lambda { |u| u.isAdmin? } do
+      mount PgHero::Engine, at: "pghero"
+    end
+  end
+
   root "home_pages#index"
 
   resources :dashboards, only: [:index]
