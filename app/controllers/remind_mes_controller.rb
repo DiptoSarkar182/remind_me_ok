@@ -12,11 +12,12 @@ class RemindMesController < ApplicationController
   def create
     @remind_me = current_user.remind_mes.build(remind_me_params)
 
-    if current_user.time_zone.blank?
+    if current_user.time_zone.blank? || current_user.time_zone != params[:remind_me][:time_zone]
       current_user.update(time_zone: params[:remind_me][:time_zone])
     end
 
     if @remind_me.save
+      ReminderJob.set(wait_until: @remind_me.remind_me_date_time).perform_later(@remind_me)
       redirect_to dashboards_path, notice: "Reminder created successfully"
     else
       render 'new', status: :unprocessable_entity
