@@ -1,0 +1,38 @@
+<%= form_with(model: remind_me) do |form| %>
+
+  <% if remind_me.errors.any? %>
+    <div>
+      <h2><%= pluralize(remind_me.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% remind_me.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :time_zone %><br />
+    <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.all, default: @current_user.time_zone || "International Date Line West", autofocus: true %>
+  </div>
+
+  <div>
+    <%= form.label :remind_me_date_time %><br />
+    <%= form.datetime_local_field :remind_me_date_time %>
+  </div>
+
+  <div>
+    <%= form.label :subject %><br />
+    <%= form.text_field :subject %>
+  </div>
+
+  <div>
+    <%= form.label :content %><br />
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>
