@@ -1,1 +1,26 @@
 <h1>Welcome to your dashboard</h1>
+
+<%= button_to "New", new_remind_me_path, method: :get %>
+
+
+<h1>Your Reminders</h1>
+
+<% if @remind_mes.any? %>
+  <ul>
+    <% @remind_mes.each do |remind_me| %>
+      <li>
+        <strong>Subject:</strong> <%= remind_me.subject %><br>
+        <strong>Content:</strong> <%= remind_me.content %><br>
+        <strong>Remind Me At:</strong> <%= remind_me.remind_me_date_time %>
+      </li>
+      <div>
+        <%= link_to "Edit", edit_remind_me_path(remind_me) %>
+      </div>
+      <div>
+        <%= button_to "Delete", remind_me_path(remind_me), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete %>
+      </div>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have no reminders.</p>
+<% end %>

@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   root "home_pages#index"
 
   resources :dashboards, only: [:index]
+  resources :remind_mes
 end

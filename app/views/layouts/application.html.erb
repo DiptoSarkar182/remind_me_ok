@@ -19,7 +19,7 @@
 
   <body>
   <div>
-    <% unless current_page?(dashboards_path) %>
+    <% unless hide_elements_on_pages? %>
       <div>
         <%= link_to "Remind Me, Ok?", root_path %>
       </div>
@@ -37,7 +37,10 @@
         </div>
       <% end %>
     <% end %>
-    <% if user_signed_in? && current_page?(dashboards_path) %>
+    <% if user_signed_in? && hide_elements_on_pages? %>
+      <div>
+        <%= link_to "Dashboard", dashboards_path %>
+      </div>
       <div>
         <%= button_to "Log Out", destroy_user_session_path, method: :delete %>
       </div>

@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   scope :admins, -> { where(isAdmin: true) }
+
+  has_many :remind_mes, dependent: :destroy
 end
