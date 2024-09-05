@@ -62,3 +62,5 @@ gem "devise", "~> 4.9"
 
 gem "good_job", "~> 4.2"
 gem "foreman", "~> 0.88.1"
+
+gem "cancancan", "~> 3.6"
