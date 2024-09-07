@@ -2,7 +2,6 @@
 
 <%= button_to "New", new_remind_me_path, method: :get %>
 
-
 <h1>Your Reminders</h1>
 
 <% if @remind_mes.any? %>
@@ -11,7 +10,8 @@
       <li>
         <strong>Subject:</strong> <%= remind_me.subject %><br>
         <strong>Content:</strong> <%= remind_me.content %><br>
-        <strong>Remind Me At:</strong> <%= remind_me.remind_me_date_time %>
+        <strong>Time Zone:</strong> <%= remind_me.remind_me_time_zone %><br>
+        <strong>Remind Me At:</strong> <%= remind_me.remind_me_date_time.in_time_zone(remind_me.remind_me_time_zone).strftime("%B %d, %Y %I:%M %p") %>
       </li>
       <div>
         <%= link_to "Edit", edit_remind_me_path(remind_me) %>
