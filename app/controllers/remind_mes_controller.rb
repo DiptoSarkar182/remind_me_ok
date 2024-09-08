@@ -11,21 +11,32 @@ class RemindMesController < ApplicationController
   def create
     @remind_me = current_user.remind_mes.build(remind_me_params)
 
+    # Convert the remind_me_date_time to UTC based on the provided time zone
+    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
+
+    # Check if the new reminder time is in the past
+    if reminder_time_in_utc < Time.current
+      redirect_to new_remind_me_path, alert: "Cannot set a reminder in the past."
+      return
+    end
+
+    # Update user's time zone if necessary
     if current_user.time_zone.blank? || current_user.time_zone != params[:remind_me][:remind_me_time_zone]
       current_user.update(time_zone: params[:remind_me][:remind_me_time_zone])
     end
 
-    # Convert the remind_me_date_time to UTC based on user's time zone
-    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
     @remind_me.remind_me_date_time = reminder_time_in_utc
 
-    if @remind_me.save
-      # Schedule the job at the converted UTC time and store the job ID
-      job = ReminderJob.set(wait_until: reminder_time_in_utc).perform_later(@remind_me)
-      @remind_me.update(job_id: job.provider_job_id)
-      redirect_to dashboards_path, notice: "Reminder created successfully"
-    else
-      render 'new', status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      if @remind_me.save
+        # Schedule the job at the converted UTC time and store the job ID
+        job = ReminderJob.set(wait_until: reminder_time_in_utc).perform_later(@remind_me)
+        @remind_me.update!(job_id: job.provider_job_id)
+        redirect_to dashboards_path, notice: "Reminder created successfully"
+      else
+        render 'new', status: :unprocessable_entity
+        raise ActiveRecord::Rollback
+      end
     end
   end
 
@@ -40,6 +51,12 @@ class RemindMesController < ApplicationController
     # Convert the remind_me_date_time to UTC based on user's time zone
     reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
 
+    # Check if the new reminder time is in the past
+    if reminder_time_in_utc < Time.current
+      redirect_to edit_remind_me_path(@remind_me), alert: "Cannot set a reminder in the past."
+      return
+    end
+
     ActiveRecord::Base.transaction do
       # Lock the reminder record to prevent race conditions
       @remind_me.lock!
@@ -48,9 +65,13 @@ class RemindMesController < ApplicationController
         # Find the associated job using the stored job ID
         job = GoodJob::Job.find_by(active_job_id: @remind_me.job_id)
 
-        # If the job is scheduled and not yet performed, update it
-        if job && job.scheduled_at > Time.current && job.performed_at.nil?
+        if job && job.performed_at.nil?
+          # If the job is scheduled and not yet performed, update it
           job.update(scheduled_at: reminder_time_in_utc)
+        else
+          # If the job has already been performed, create a new job
+          new_job = ReminderJob.set(wait_until: reminder_time_in_utc).perform_later(@remind_me)
+          @remind_me.update(job_id: new_job.provider_job_id)
         end
 
         redirect_to dashboards_path, notice: "Reminder updated successfully"
