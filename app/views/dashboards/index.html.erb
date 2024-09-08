@@ -4,9 +4,10 @@
 
 <h1>Your Reminders</h1>
 
-<% if @remind_mes.any? %>
+<h2>Reminded You</h2>
+<% if @reminded_you.any? %>
   <ul>
-    <% @remind_mes.each do |remind_me| %>
+    <% @reminded_you.each do |remind_me| %>
       <li>
         <strong>Subject:</strong> <%= remind_me.subject %><br>
         <strong>Content:</strong> <%= remind_me.content %><br>
@@ -22,5 +23,27 @@
     <% end %>
   </ul>
 <% else %>
-  <p>You have no reminders.</p>
+  <p>You have no past reminders.</p>
+<% end %>
+
+<h2>Will Remind You</h2>
+<% if @will_remind_you.any? %>
+  <ul>
+    <% @will_remind_you.each do |remind_me| %>
+      <li>
+        <strong>Subject:</strong> <%= remind_me.subject %><br>
+        <strong>Content:</strong> <%= remind_me.content %><br>
+        <strong>Time Zone:</strong> <%= remind_me.remind_me_time_zone %><br>
+        <strong>Remind Me At:</strong> <%= remind_me.remind_me_date_time.in_time_zone(remind_me.remind_me_time_zone).strftime("%B %d, %Y %I:%M %p") %>
+      </li>
+      <div>
+        <%= link_to "Edit", edit_remind_me_path(remind_me) %>
+      </div>
+      <div>
+        <%= button_to "Delete", remind_me_path(remind_me), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete %>
+      </div>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have no upcoming reminders.</p>
 <% end %>
