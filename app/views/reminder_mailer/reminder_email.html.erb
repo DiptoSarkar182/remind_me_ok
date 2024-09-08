@@ -4,4 +4,4 @@
 
 <p><%= @remind_me.content %></p>
 
-<p>Reminder set for: <%= @remind_me.remind_me_date_time %></p>
+<p>Reminder set for: <%= @remind_me_date_time_in_user_time_zone.strftime("%B %d, %Y %I:%M %p %Z") %></p>
