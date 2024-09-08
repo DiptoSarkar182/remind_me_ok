@@ -37,10 +37,26 @@ class RemindMesController < ApplicationController
       current_user.update(time_zone: params[:remind_me][:remind_me_time_zone])
     end
 
-    if @remind_me.update(remind_me_params)
-      redirect_to dashboards_path, notice: "Reminder updated successfully"
-    else
-      render 'edit', status: :unprocessable_entity
+    # Convert the remind_me_date_time to UTC based on user's time zone
+    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
+
+    ActiveRecord::Base.transaction do
+      # Lock the reminder record to prevent race conditions
+      @remind_me.lock!
+
+      if @remind_me.update(remind_me_params.merge(remind_me_date_time: reminder_time_in_utc))
+        # Find the associated job using the stored job ID
+        job = GoodJob::Job.find_by(active_job_id: @remind_me.job_id)
+
+        # If the job is scheduled and not yet performed, update it
+        if job && job.scheduled_at > Time.current && job.performed_at.nil?
+          job.update(scheduled_at: reminder_time_in_utc)
+        end
+
+        redirect_to dashboards_path, notice: "Reminder updated successfully"
+      else
+        render 'edit', status: :unprocessable_entity
+      end
     end
   end
 
