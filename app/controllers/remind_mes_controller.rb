@@ -11,18 +11,26 @@ class RemindMesController < ApplicationController
   def create
     @remind_me = current_user.remind_mes.build(remind_me_params)
 
+    # Validate presence of remind_me_date_time and remind_me_time_zone
+    if remind_me_params[:remind_me_date_time].blank? || remind_me_params[:remind_me_time_zone].blank?
+      flash.now[:alert] = "Remind me date time and time zone can't be blank."
+      render 'new', status: :unprocessable_entity
+      return
+    end
+
     # Convert the remind_me_date_time to UTC based on the provided time zone
-    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
+    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(remind_me_params[:remind_me_time_zone]).utc
 
     # Check if the new reminder time is in the past
     if reminder_time_in_utc < Time.current
-      redirect_to new_remind_me_path, alert: "Cannot set a reminder in the past."
+      flash.now[:alert] = "Cannot set a reminder in the past."
+      render 'new', status: :unprocessable_entity
       return
     end
 
     # Update user's time zone if necessary
-    if current_user.time_zone.blank? || current_user.time_zone != params[:remind_me][:remind_me_time_zone]
-      current_user.update(time_zone: params[:remind_me][:remind_me_time_zone])
+    if current_user.time_zone.blank? || current_user.time_zone != remind_me_params[:remind_me_time_zone]
+      current_user.update(time_zone: remind_me_params[:remind_me_time_zone])
     end
 
     @remind_me.remind_me_date_time = reminder_time_in_utc
