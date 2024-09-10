@@ -11,29 +11,16 @@ class RemindMesController < ApplicationController
   def create
     @remind_me = current_user.remind_mes.build(remind_me_params)
 
-    # Validate presence of remind_me_date_time and remind_me_time_zone
-    if remind_me_params[:remind_me_date_time].blank? || remind_me_params[:remind_me_time_zone].blank?
-      flash.now[:alert] = "Remind me date time and time zone can't be blank."
-      render 'new', status: :unprocessable_entity
-      return
-    end
-
     # Convert the remind_me_date_time to UTC based on the provided time zone
-    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(remind_me_params[:remind_me_time_zone]).utc
-
-    # Check if the new reminder time is in the past
-    if reminder_time_in_utc < Time.current
-      flash.now[:alert] = "Cannot set a reminder in the past."
-      render 'new', status: :unprocessable_entity
-      return
+    if remind_me_params[:remind_me_date_time].present? && remind_me_params[:remind_me_time_zone].present?
+      reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(remind_me_params[:remind_me_time_zone]).utc
+      @remind_me.remind_me_date_time = reminder_time_in_utc
     end
 
     # Update user's time zone if necessary
     if current_user.time_zone.blank? || current_user.time_zone != remind_me_params[:remind_me_time_zone]
       current_user.update(time_zone: remind_me_params[:remind_me_time_zone])
     end
-
-    @remind_me.remind_me_date_time = reminder_time_in_utc
 
     ActiveRecord::Base.transaction do
       if @remind_me.save
@@ -52,25 +39,22 @@ class RemindMesController < ApplicationController
   end
 
   def update
+    # Lock the reminder record to prevent race conditions
+    @remind_me.lock!
 
     # Convert the remind_me_date_time to UTC based on user's time zone
-    reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
-
-    # Check if the new reminder time is in the past
-    if reminder_time_in_utc < Time.current
-      redirect_to edit_remind_me_path(@remind_me), alert: "Cannot set a reminder in the past."
-      return
-    end
-
-    if current_user.time_zone.blank? || current_user.time_zone != params[:remind_me][:remind_me_time_zone]
-      current_user.update(time_zone: params[:remind_me][:remind_me_time_zone])
+    if remind_me_params[:remind_me_date_time].present? && remind_me_params[:remind_me_time_zone].present?
+      reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(remind_me_params[:remind_me_time_zone]).utc
+      @remind_me.remind_me_date_time = reminder_time_in_utc
     end
 
     ActiveRecord::Base.transaction do
-      # Lock the reminder record to prevent race conditions
-      @remind_me.lock!
-
       if @remind_me.update(remind_me_params.merge(remind_me_date_time: reminder_time_in_utc))
+        # Update user's time zone if necessary
+        if current_user.time_zone.blank? || current_user.time_zone != remind_me_params[:remind_me_time_zone]
+          current_user.update(time_zone: remind_me_params[:remind_me_time_zone])
+        end
+
         # Find the associated job using the stored job ID
         job = GoodJob::Job.find_by(active_job_id: @remind_me.job_id)
 
