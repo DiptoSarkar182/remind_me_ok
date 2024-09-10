@@ -22,6 +22,11 @@ module RemindMeOk
     # in config/environments, which are processed later.
     #
     config.time_zone = "UTC"
+
+    config.active_record.encryption.primary_key = ENV['ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY']
+    config.active_record.encryption.deterministic_key = ENV['ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY']
+    config.active_record.encryption.key_derivation_salt = ENV['ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT']
+
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
