@@ -44,9 +44,6 @@ class RemindMesController < ApplicationController
   end
 
   def update
-    if current_user.time_zone.blank? || current_user.time_zone != params[:remind_me][:remind_me_time_zone]
-      current_user.update(time_zone: params[:remind_me][:remind_me_time_zone])
-    end
 
     # Convert the remind_me_date_time to UTC based on user's time zone
     reminder_time_in_utc = remind_me_params[:remind_me_date_time].in_time_zone(params[:remind_me][:remind_me_time_zone]).utc
@@ -55,6 +52,10 @@ class RemindMesController < ApplicationController
     if reminder_time_in_utc < Time.current
       redirect_to edit_remind_me_path(@remind_me), alert: "Cannot set a reminder in the past."
       return
+    end
+
+    if current_user.time_zone.blank? || current_user.time_zone != params[:remind_me][:remind_me_time_zone]
+      current_user.update(time_zone: params[:remind_me][:remind_me_time_zone])
     end
 
     ActiveRecord::Base.transaction do
