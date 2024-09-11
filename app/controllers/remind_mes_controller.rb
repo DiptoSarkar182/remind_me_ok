@@ -91,7 +91,14 @@ class RemindMesController < ApplicationController
       @remind_me.destroy
     end
 
-    redirect_to dashboards_path, notice: "Reminder deleted successfully"
+    current_time = Time.current
+    @reminded_you = current_user.remind_mes.where('remind_me_date_time <= ?', current_time)
+    @will_remind_you = current_user.remind_mes.where('remind_me_date_time > ?', current_time)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to dashboards_path, notice: "Reminder deleted successfully" }
+    end
   end
 
   private
