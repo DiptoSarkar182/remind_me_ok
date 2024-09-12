@@ -16,37 +16,72 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body>
-  <div>
-    <% unless hide_elements_on_pages? %>
-      <div>
-        <%= link_to "Remind Me, Ok?", root_path %>
-      </div>
-      <% if user_signed_in? %>
-        <div>Hello, <%= current_user.full_name %></div>
-        <div>
-          <%= link_to "Dashboard", dashboards_path %>
+  <header class="bg-white dark:bg-gray-900">
+    <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <div class="flex-1 md:flex md:items-center md:gap-12">
+          <%= link_to root_path, class: "text-2xl font-bold text-teal-600 dark:text-teal-300 hover:text-teal-500 dark:hover:text-teal-200 transition-colors duration-300" do %>
+            Remind Me, <span class="text-gray-800 dark:text-white">Ok?</span>
+          <% end %>
         </div>
-      <% else %>
-        <div>
-          <%= button_to "Log In", new_user_session_url, method: "get" %>
+
+        <div class="md:flex md:items-center md:gap-12">
+          <nav aria-label="Global" class="hidden md:block">
+            <ul class="flex items-center gap-6 text-sm">
+              <li>
+                <a
+                  class="text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75"
+                  href="#"
+                >
+                  About
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <div class="flex items-center gap-4">
+            <% if user_signed_in? %>
+              <div class="sm:flex sm:gap-4">
+                <div class="text-gray-500 dark:text-white">
+                  Hello, <%= current_user.full_name %>
+                </div>
+                <%= link_to "Dashboard", dashboards_path, class: "rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow dark:hover:bg-teal-500" %>
+                <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 dark:bg-gray-800 dark:text-white dark:hover:text-white/75" %>
+              </div>
+            <% else %>
+              <div class="sm:flex sm:gap-4">
+                <%= button_to "Log In", new_user_session_url, method: "get", class: "rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow dark:hover:bg-teal-500" %>
+                <div class="hidden sm:flex">
+                  <%= button_to "Sign Up", new_user_registration_url, method: "get", class: "rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 dark:bg-gray-800 dark:text-white dark:hover:text-white/75" %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="block md:hidden">
+              <button
+                class="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
-        <div>
-          <%= button_to "Sign Up", new_user_registration_url, method: "get" %>
-        </div>
-      <% end %>
-    <% end %>
-    <% if user_signed_in? && hide_elements_on_pages? %>
-      <div>
-        <%= link_to "Dashboard", dashboards_path %>
       </div>
-      <div>
-        <%= button_to "Log Out", destroy_user_session_path, method: :delete %>
-      </div>
-    <% end %>
-  </div>
+    </div>
+  </header>
 
   <% if alert || notice %>
     <div>

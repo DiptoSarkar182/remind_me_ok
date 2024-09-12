@@ -66,3 +66,5 @@ gem "foreman", "~> 0.88.1"
 gem "cancancan", "~> 3.6"
 
 gem "pghero", "~> 3.6"
+gem 'jsbundling-rails'
+gem 'cssbundling-rails'
