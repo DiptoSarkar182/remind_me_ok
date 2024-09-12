@@ -1,0 +1,43 @@
+<%= form_with(model: remind_me) do |form| %>
+  <% if remind_me.errors.any? %>
+    <div>
+      <h2><%= pluralize(remind_me.errors.count, "error") %> prohibited this post from being saved:</h2>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :remind_me_time_zone %><br />
+    <%= form.time_zone_select :remind_me_time_zone, ActiveSupport::TimeZone.all, default: @current_user.time_zone || "International Date Line West", autofocus: true %>
+    <% if remind_me.errors[:remind_me_time_zone].any? %>
+      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:remind_me_time_zone).join(", ") %></strong></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :remind_me_date_time %><br />
+    <%= form.datetime_local_field :remind_me_date_time, value: remind_me.remind_me_date_time&.in_time_zone(remind_me.remind_me_time_zone)&.strftime("%Y-%m-%dT%H:%M") %>
+    <% if remind_me.errors[:remind_me_date_time].any? %>
+      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:remind_me_date_time).join(", ") %></strong></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :subject %><br />
+    <%= form.text_field :subject %>
+    <% if remind_me.errors[:subject].any? %>
+      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:subject).join(", ") %></strong></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :content %><br />
+    <%= form.text_area :content %>
+    <% if remind_me.errors[:content].any? %>
+      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:content).join(", ") %></strong></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -71,7 +71,8 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter = :resque
+  config.active_job.queue_adapter = :good_job
+  config.good_job.execution_mode = :external
   # config.active_job.queue_name_prefix = "remind_me_ok_production"
 
   # Disable caching for Action Mailer templates even if Action Controller
@@ -99,4 +100,15 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  config.action_mailer.default_url_options = { :host => 'https://remind-me-ok-dev.onrender.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => ENV['SENDGRID_USERNAME'],
+    :password => ENV['SENDGRID_PASSWORD'],
+    :address => 'smtp.sendgrid.net',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 end

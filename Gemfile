@@ -43,6 +43,8 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "letter_opener"
+  gem "dotenv"
 end
 
 group :development do
@@ -55,3 +57,12 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "devise", "~> 4.9"
+
+gem "good_job", "~> 4.2"
+gem "foreman", "~> 0.88.1"
+
+gem "cancancan", "~> 3.6"
+
+gem "pghero", "~> 3.6"

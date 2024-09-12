@@ -1,0 +1,4 @@
+<!--# views/remind_mes/destroy.turbo_stream.erb-->
+<%= turbo_stream.replace "your_reminders" do %>
+  <%= render partial: "dashboards/your_reminders", locals: { reminded_you: @reminded_you, will_remind_you: @will_remind_you } %>
+<% end %>

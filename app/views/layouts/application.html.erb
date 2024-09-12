@@ -4,6 +4,7 @@
     <title><%= content_for(:title) || "Remind Me Ok" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="turbo-cache-control" content="no-cache">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -18,6 +19,50 @@
   </head>
 
   <body>
-    <%= yield %>
+  <div>
+    <% unless hide_elements_on_pages? %>
+      <div>
+        <%= link_to "Remind Me, Ok?", root_path %>
+      </div>
+      <% if user_signed_in? %>
+        <div>Hello, <%= current_user.full_name %></div>
+        <div>
+          <%= link_to "Dashboard", dashboards_path %>
+        </div>
+      <% else %>
+        <div>
+          <%= button_to "Log In", new_user_session_url, method: "get" %>
+        </div>
+        <div>
+          <%= button_to "Sign Up", new_user_registration_url, method: "get" %>
+        </div>
+      <% end %>
+    <% end %>
+    <% if user_signed_in? && hide_elements_on_pages? %>
+      <div>
+        <%= link_to "Dashboard", dashboards_path %>
+      </div>
+      <div>
+        <%= button_to "Log Out", destroy_user_session_path, method: :delete %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if alert || notice %>
+    <div>
+      <% if notice %>
+        <div>
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div>
+          <%= alert %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= yield %>
   </body>
 </html>

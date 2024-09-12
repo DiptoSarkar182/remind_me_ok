@@ -1,0 +1,7 @@
+<p>Hi <%= @remind_me.user.full_name %>,</p>
+
+<p>This is a reminder for: <%= @remind_me.subject %></p>
+
+<p><%= @remind_me.content %></p>
+
+<p>Reminder set for: <%= @remind_me_date_time_in_user_time_zone.strftime("%B %d, %Y %I:%M %p %Z") %></p>
