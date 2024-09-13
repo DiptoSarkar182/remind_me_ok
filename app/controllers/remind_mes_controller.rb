@@ -1,6 +1,6 @@
 class RemindMesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_remind_me, only: [:edit, :update, :destroy]
+  before_action :set_remind_me, only: [:edit, :update, :show, :destroy]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
   before_action :load_current_user, only: [:new, :edit]
 
@@ -33,6 +33,9 @@ class RemindMesController < ApplicationController
         raise ActiveRecord::Rollback
       end
     end
+  end
+
+  def show
   end
 
   def edit

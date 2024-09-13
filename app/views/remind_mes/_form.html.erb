@@ -1,43 +1,50 @@
-<%= form_with(model: remind_me) do |form| %>
-  <% if remind_me.errors.any? %>
-    <div>
-      <h2><%= pluralize(remind_me.errors.count, "error") %> prohibited this post from being saved:</h2>
+<!--# views/remind_me/_form.html.erb-->
+<section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+  <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white"><%= form_title %></h2>
+
+  <%= form_with(model: remind_me, local: true) do |form| %>
+    <% if remind_me.errors.any? %>
+      <div class="mb-4">
+        <h2 class="text-red-600 dark:text-red-400"><%= pluralize(remind_me.errors.count, "error") %> prohibited this post from being saved:</h2>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 gap-6 mt-4">
+      <div>
+        <%= form.label :remind_me_time_zone, class: "text-gray-700 dark:text-gray-200" %>
+        <%= form.time_zone_select :remind_me_time_zone, ActiveSupport::TimeZone.all, { default: @current_user.time_zone || "International Date Line West" }, { class: "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring", autofocus: true } %>
+        <% if remind_me.errors[:remind_me_time_zone].any? %>
+          <div class="error-message text-red-600 dark:text-red-400"><strong><%= remind_me.errors.full_messages_for(:remind_me_time_zone).join(", ") %></strong></div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.label :remind_me_date_time, "Remind Me Date & Time", class: "text-gray-700 dark:text-gray-200" %>
+        <%= form.datetime_local_field :remind_me_date_time, value: remind_me.remind_me_date_time&.in_time_zone(remind_me.remind_me_time_zone)&.strftime("%Y-%m-%dT%H:%M"), class: "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" %>
+        <% if remind_me.errors[:remind_me_date_time].any? %>
+          <div class="error-message text-red-600 dark:text-red-400"><strong><%= remind_me.errors.full_messages_for(:remind_me_date_time).join(", ") %></strong></div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.label :subject, class: "text-gray-700 dark:text-gray-200" %>
+        <%= form.text_field :subject, class: "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" %>
+        <% if remind_me.errors[:subject].any? %>
+          <div class="error-message text-red-600 dark:text-red-400"><strong><%= remind_me.errors.full_messages_for(:subject).join(", ") %></strong></div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.label :content, class: "text-gray-700 dark:text-gray-200" %>
+        <%= form.text_area :content, class: "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" %>
+        <% if remind_me.errors[:content].any? %>
+          <div class="error-message text-red-600 dark:text-red-400"><strong><%= remind_me.errors.full_messages_for(:content).join(", ") %></strong></div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <%= form.submit class: "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 cursor-pointer" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :remind_me_time_zone %><br />
-    <%= form.time_zone_select :remind_me_time_zone, ActiveSupport::TimeZone.all, default: @current_user.time_zone || "International Date Line West", autofocus: true %>
-    <% if remind_me.errors[:remind_me_time_zone].any? %>
-      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:remind_me_time_zone).join(", ") %></strong></div>
-    <% end %>
-  </div>
-
-  <div>
-    <%= form.label :remind_me_date_time %><br />
-    <%= form.datetime_local_field :remind_me_date_time, value: remind_me.remind_me_date_time&.in_time_zone(remind_me.remind_me_time_zone)&.strftime("%Y-%m-%dT%H:%M") %>
-    <% if remind_me.errors[:remind_me_date_time].any? %>
-      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:remind_me_date_time).join(", ") %></strong></div>
-    <% end %>
-  </div>
-
-  <div>
-    <%= form.label :subject %><br />
-    <%= form.text_field :subject %>
-    <% if remind_me.errors[:subject].any? %>
-      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:subject).join(", ") %></strong></div>
-    <% end %>
-  </div>
-
-  <div>
-    <%= form.label :content %><br />
-    <%= form.text_area :content %>
-    <% if remind_me.errors[:content].any? %>
-      <div class="error-message"><strong><%= remind_me.errors.full_messages_for(:content).join(", ") %></strong></div>
-    <% end %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</section>

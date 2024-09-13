@@ -1,0 +1,27 @@
+<div>
+   <%= @remind_me.subject %>
+</div>
+
+<div>
+  <%= @remind_me.content %>
+</div>
+
+<div>
+  <%= @remind_me.remind_me_date_time %>
+</div>
+
+<div>
+  <%= @remind_me.remind_me_time_zone %>
+</div>
+
+<div>
+  <% if @remind_me.created_at == @remind_me.updated_at %>
+    <div>
+      <%= @remind_me.created_at %>
+    </div>
+  <%else %>
+    <div>
+      <%= @remind_me.updated_at %>
+    </div>
+  <% end %>
+</div>

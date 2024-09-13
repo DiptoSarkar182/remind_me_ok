@@ -1,8 +1,4 @@
 <!--# views/dashboards/index.html.erb-->
-<h1>Welcome to your dashboard</h1>
-
-<%= button_to "New", new_remind_me_path, method: :get %>
-
 <div id="your_reminders">
   <%= render partial: "dashboards/your_reminders", locals: { reminded_you: @reminded_you, will_remind_you: @will_remind_you } %>
 </div>
