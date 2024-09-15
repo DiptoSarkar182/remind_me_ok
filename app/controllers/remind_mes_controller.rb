@@ -1,6 +1,6 @@
 class RemindMesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_remind_me, only: [:edit, :update, :show, :destroy]
+  before_action :set_remind_me, only: [:edit, :update, :show, :destroy, :delete_from_show_page]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
   before_action :load_current_user, only: [:new, :edit]
 
@@ -99,7 +99,28 @@ class RemindMesController < ApplicationController
     @will_remind_you = current_user.remind_mes.where('remind_me_date_time > ?', current_time)
 
     respond_to do |format|
-      format.turbo_stream
+      format.html { render partial: "dashboards/reminders_dashboard", locals: { reminded_you: @reminded_you, will_remind_you: @will_remind_you } }
+    end
+  end
+
+  def delete_from_show_page
+    ActiveRecord::Base.transaction do
+      # Lock the reminder record to prevent race conditions
+      @remind_me.lock!
+
+      # Find the associated job using the stored job ID
+      job = GoodJob::Job.find_by(active_job_id: @remind_me.job_id)
+
+      # If the job is scheduled and not yet performed, delete it
+      if job && job.scheduled_at > Time.current && job.performed_at.nil?
+        job.destroy
+      end
+
+      # Destroy the reminder
+      @remind_me.destroy
+    end
+
+    respond_to do |format|
       format.html { redirect_to dashboards_path, notice: "Reminder deleted successfully" }
     end
   end
