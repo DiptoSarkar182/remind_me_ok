@@ -1,7 +1,53 @@
-<p>Hi <%= @remind_me.user.full_name %>,</p>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="min-width: 100%; background-color: #f3f4f6;">
+  <tr>
+    <td align="center" style="padding: 40px 0;">
+      <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <!-- Header -->
+        <tr>
+          <td style="background-color: #3b82f6; padding: 24px; text-align: center;">
+            <h1 style="color: #ffffff; font-size: 24px; margin: 0;">Reminded you. Happy?</h1>
+          </td>
+        </tr>
 
-<p>This is a reminder for: <%= @remind_me.subject %></p>
+        <!-- Content -->
+        <tr>
+          <td style="padding: 32px;">
+            <h2 style="color: #1f2937; font-size: 20px; margin-top: 0;">Hi <%= @remind_me.user.full_name %>,</h2>
+            <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
+              This is a reminder for: <strong><%= @remind_me.subject %></strong>
+            </p>
+            <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
+              <%= @remind_me.content %>
+            </p>
+            <p style="color: #4b5563; font-size: 16px; line-height: 1.5;">
+              Reminder set for: <%= @remind_me_date_time_in_user_time_zone.strftime("%B %d, %Y %I:%M %p %Z") %>
+            </p>
+            <% if @action_required %>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="padding-top: 24px;">
+                    <a href="<%= @action_url %>" style="display: inline-block; background-color: #3b82f6; color: #ffffff; font-size: 16px; font-weight: bold; text-decoration: none; padding: 12px 24px; border-radius: 4px;">
+                      <%= @action_text %>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            <% end %>
+          </td>
+        </tr>
 
-<p><%= @remind_me.content %></p>
-
-<p>Reminder set for: <%= @remind_me_date_time_in_user_time_zone.strftime("%B %d, %Y %I:%M %p %Z") %></p>
+        <!-- Footer -->
+        <tr>
+          <td style="background-color: #f3f4f6; padding: 24px; text-align: center;">
+            <p style="color: #6b7280; font-size: 14px; margin: 0;">
+              © <%= Time.now.year %> Remind Me, OK?. All rights reserved.
+            </p>
+            <p style="color: #6b7280; font-size: 14px; margin-top: 8px;">
+              You're receiving this email because you set a reminder with our service.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

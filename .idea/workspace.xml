@@ -4,28 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13564f40-1fc9-4b81-b967-7d4699d519b1" name="Changes" comment="removed logo and added warning.">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/694e95c8-6f26-4186-b2af-b871143bdf08.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/694e95c8-6f26-4186-b2af-b871143bdf08/storage_v2/_src_/database/postgres.edMnLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/694e95c8-6f26-4186-b2af-b871143bdf08/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/694e95c8-6f26-4186-b2af-b871143bdf08/storage_v2/_src_/database/remind_me_ok_development.JRDs3A.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/694e95c8-6f26-4186-b2af-b871143bdf08/storage_v2/_src_/database/remind_me_ok_development.JRDs3A/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/694e95c8-6f26-4186-b2af-b871143bdf08/storage_v2/_src_/database/remind_me_ok_development.JRDs3A/schema/public.abK9xQ.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/remind_me_ok.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remind_me_ok.iml" afterDir="false" />
+    <list default="true" id="13564f40-1fc9-4b81-b967-7d4699d519b1" name="Changes" comment="added test if stimulus is working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/remind_mes_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/remind_mes_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/controllers/hello_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/controllers/hello_controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/controllers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/controllers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/remind_me.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/remind_me.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/dashboards/_your_reminders.html.erb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/dashboards/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/dashboards/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/devise/registrations/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/devise/registrations/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/remind_mes/destroy.turbo_stream.erb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/remind_mes/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/remind_mes/show.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/reminder_mailer/reminder_email.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/reminder_mailer/reminder_email.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +30,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JavaScript Debug.rich.html.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "remind__me__ok__dev",
     "node.js.detected.package.eslint": "true",
@@ -65,7 +47,10 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Rails.remind_me_ok">
+  <component name="RunManager" selected="JavaScript Debug.rich.html">
+    <configuration name="rich.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/remind_me_ok/tmp/letter_opener/1726421160_4001274_3cc7c0a/rich.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="remind_me_ok" type="RailsRunConfigurationType" factoryName="Rails">
       <module name="remind_me_ok" />
       <predefined_log_file enabled="true" id="RUBY_RAILS_SERVER" />
@@ -129,6 +114,11 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TESTOPTS" VALUE="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.rich.html" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -146,7 +136,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1726397759262</updated>
-      <workItem from="1726397766651" duration="13266000" />
+      <workItem from="1726397766651" duration="15307000" />
     </task>
     <task id="LOCAL-00001" summary="alert-notice section highlighted with comment">
       <option name="closed" value="true" />
@@ -172,7 +162,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726415462098</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added show styling with separate destroy action and turbo stream for dashboard index">
+      <option name="closed" value="true" />
+      <created>1726415673826</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726415673826</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added test if stimulus is working">
+      <option name="closed" value="true" />
+      <created>1726415708538</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726415708538</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,6 +188,8 @@
     <MESSAGE value="alert-notice section highlighted with comment" />
     <MESSAGE value="remind me ok will be dashboard path for edit user registration path, default email added for view use" />
     <MESSAGE value="removed logo and added warning." />
-    <option name="LAST_COMMIT_MESSAGE" value="removed logo and added warning." />
+    <MESSAGE value="added show styling with separate destroy action and turbo stream for dashboard index" />
+    <MESSAGE value="added test if stimulus is working" />
+    <option name="LAST_COMMIT_MESSAGE" value="added test if stimulus is working" />
   </component>
 </project>
