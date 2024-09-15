@@ -9,6 +9,8 @@ class RemindMe < ApplicationRecord
 
   encrypts :subject, :content
 
+  before_destroy :destroy_associated_job
+
   private
 
   def remind_me_date_time_cannot_be_in_the_past
@@ -16,4 +18,10 @@ class RemindMe < ApplicationRecord
       errors.add(:remind_me_date_time, "can't be in the past")
     end
   end
+
+  def destroy_associated_job
+    job = GoodJob::Job.find_by(active_job_id: job_id)
+    job.destroy if job && job.scheduled_at > Time.current && job.performed_at.nil?
+  end
+
 end
