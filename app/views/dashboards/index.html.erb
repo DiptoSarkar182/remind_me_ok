@@ -1,6 +1,6 @@
 <!--# views/dashboards/index.html.erb-->
 <div >
-  <turbo-frame id="reminders_dashboard">
+<!--  <turbo-frame id="reminders_dashboard">-->
 
   <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Reminded You</h2>
   <% if @reminded_you.any? %>
@@ -18,12 +18,14 @@
             <div class="card-actions justify-end mt-4">
               <%= link_to "View", remind_me_path(remind_me), data: { turbo_frame: "_top" }, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
               <%= link_to "Edit", edit_remind_me_path(remind_me), data: { turbo_frame: "_top" }, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
-              <%= button_to "Delete", remind_me_path(remind_me), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
+              <%#= button_to "Delete", remind_me_path(remind_me), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
             </div>
           </article>
         </div>
       <% end %>
     </div>
+<!--      here is pagination-->
+      <%= paginate @reminded_you, param_name: 'reminded_you_page' %>
   <% else %>
     <p class="text-gray-600 dark:text-gray-300">You have no past reminders.</p>
   <% end %>
@@ -44,14 +46,16 @@
             <div class="card-actions justify-end mt-4">
               <%= link_to "View", remind_me_path(remind_me), data: { turbo_frame: "_top" }, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
               <%= link_to "Edit", edit_remind_me_path(remind_me), data: { turbo_frame: "_top" }, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
-              <%= button_to "Delete", remind_me_path(remind_me), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
+              <%#= button_to "Delete", remind_me_path(remind_me), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, method: :delete, class: "group inline-flex items-center gap-1 text-sm font-medium text-blue-600 dark:text-blue-400" %>
             </div>
           </article>
         </div>
       <% end %>
     </div>
+    <!--      here is pagination-->
+      <%= paginate @will_remind_you, param_name: 'will_remind_you_page' %>
   <% else %>
     <p class="text-gray-600 dark:text-gray-300">You have no upcoming reminders.</p>
   <% end %>
-  </turbo-frame>
+<!--  </turbo-frame>-->
 </div>
