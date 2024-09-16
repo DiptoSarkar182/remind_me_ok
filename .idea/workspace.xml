@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13564f40-1fc9-4b81-b967-7d4699d519b1" name="Changes" comment="added email template" />
+    <list default="true" id="13564f40-1fc9-4b81-b967-7d4699d519b1" name="Changes" comment="added data turbo frame top for edit page">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/application.tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application.tailwind.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/remind_mes/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/remind_mes/show.html.erb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -134,7 +138,8 @@
       <option name="presentableId" value="Default" />
       <updated>1726397759262</updated>
       <workItem from="1726397766651" duration="15307000" />
-      <workItem from="1726421501252" duration="329000" />
+      <workItem from="1726421501252" duration="1595000" />
+      <workItem from="1726461333665" duration="2427000" />
     </task>
     <task id="LOCAL-00001" summary="alert-notice section highlighted with comment">
       <option name="closed" value="true" />
@@ -184,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726421818350</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added data turbo frame top for edit page">
+      <option name="closed" value="true" />
+      <created>1726423152869</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1726423152869</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +210,7 @@
     <MESSAGE value="added show styling with separate destroy action and turbo stream for dashboard index" />
     <MESSAGE value="added test if stimulus is working" />
     <MESSAGE value="added email template" />
-    <option name="LAST_COMMIT_MESSAGE" value="added email template" />
+    <MESSAGE value="added data turbo frame top for edit page" />
+    <option name="LAST_COMMIT_MESSAGE" value="added data turbo frame top for edit page" />
   </component>
 </project>

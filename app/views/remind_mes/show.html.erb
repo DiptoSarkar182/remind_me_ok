@@ -49,7 +49,7 @@
     <% formatted_updated_at = updated_at_in_zone.strftime("%B %d, %Y at %I:%M %p (%A)") %>
 
     <div class="text-sm text-gray-500 dark:text-gray-400">
-      <% if @remind_me.created_at == @remind_me.updated_at %>
+      <% if @remind_me.created_at.to_i == @remind_me.updated_at.to_i %>
         <p><strong>Created:</strong> <%= formatted_created_at %></p>
       <% else %>
         <p><strong>Updated:</strong> <%= formatted_updated_at %></p>
